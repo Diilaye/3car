@@ -28,7 +28,7 @@ app.use(bodyParser.urlencoded({
 
 const garantiRoute = require('./routes/garanti');
 
-app.use('/v1/api/garntis', garantiRoute);
+app.use('/v1/api/garantis', garantiRoute);
 
 
 app.get('/', (req, res) => {
