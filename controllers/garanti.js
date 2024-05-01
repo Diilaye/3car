@@ -19,7 +19,7 @@ exports.add = async (req, res) => {
                 marque,
                 immat,
                 place,
-                puissaance,
+                puissance,
                 police,
                 attestation,
                 effet,
@@ -45,7 +45,7 @@ exports.add = async (req, res) => {
                 vehicule.marque = marque;
                 vehicule.imatriculation = immat;
                 vehicule.place = place;
-                vehicule.puissance_fiscale = puissaance;
+                vehicule.puissance_fiscale = puissance;
                 const vehiculeSave = await vehicule.save();
                 garanti.vehiculeGaranti = vehiculeSave.id;
 
