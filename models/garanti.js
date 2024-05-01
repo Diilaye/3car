@@ -24,7 +24,7 @@ const VehiculeModel = new Schema({
         type: String,
         default: ""
     },
-    duree: {
+    durer: {
         type: String,
         default: ""
     },
@@ -32,10 +32,12 @@ const VehiculeModel = new Schema({
         type: String,
         default: ""
     },
-    codeApporteur: {
+
+    temoin: {
         type: String,
         default: ""
     },
+
     soucripteurGaranti: {
         type: Schema.Types.ObjectId,
         ref: "vehicule",
@@ -59,4 +61,4 @@ const VehiculeModel = new Schema({
     timestamps: true
 });
 
-module.exports = mongoose.model('vehicule', VehiculeModel);
+module.exports = mongoose.model('garanti', VehiculeModel);

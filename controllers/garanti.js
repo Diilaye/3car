@@ -1,10 +1,78 @@
 const garantiModel = require('../models/garanti');
+const souscripteur = require('../models/souscripteur.js');
+
+const souscripteurModel = require('../models/souscripteur.js');
+
+const vehiculeModel = require('../models/vehicule.js');
 
 exports.add = async (req, res) => {
 
     let {
-        action
+        nom_assure,
+        adresse_assure,
+        tel_assure,
+        genre,
+        marque,
+        immat,
+        place,
+        puissaance,
+        police,
+        attestation,
+        effet,
+        durer,
+        echeance,
+        temoin,
+        cause
     } = req.query;
 
-    res.json('action')
+    let vehicule = {};
+
+    const garanti = garantiModel();
+
+
+    vehicule = await vehiculeModel.findOne({
+        marque: marque
+    }).exec();
+
+    if (!vehicule) {
+        vehicule = vehiculeModel();
+
+        vehicule.genre = genre;
+        vehicule.marque = marque;
+        vehicule.imatriculation = immat;
+        vehicule.place = place;
+        vehicule.puissance_fiscale = puissaance;
+        const vehiculeSave = await vehicule.save();
+        garanti.vehiculeGaranti = vehiculeSave.id;
+
+    } else {
+        garanti.vehiculeGaranti = vehicule.id;
+    }
+
+    const souscripteur = souscripteurModel();
+
+    souscripteur.adresse = adresse_assure;
+    souscripteur.assure = nom_assure;
+    souscripteur.telephone = tel_assure;
+    const souscripteurSave = await souscripteur.save();
+
+
+    garanti.police = police;
+    garanti.temoin = temoin;
+    garanti.attestation = attestation;
+    garanti.effet = effet;
+    garanti.echeance = echeance;
+    garanti.durer = durer;
+    garanti.cause = cause;
+    garanti.cause = cause;
+    garanti.soucripteurGaranti = souscripteurSave.id;
+
+    const garantiSave = await garanti.save();
+
+    res.status(201).json({
+        message: 'creation reussi',
+        data: garantiSave,
+    })
+
+
 }
