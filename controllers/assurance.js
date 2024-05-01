@@ -13,6 +13,8 @@ exports.add = async (req, res, next) => {
             phone
         } = req.query;
 
+
+        console.log(req.query);
         const assurance = assuranceModel();
 
         assurance.code = code;
