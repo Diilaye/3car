@@ -53,12 +53,20 @@ exports.add = async (req, res) => {
                 garanti.vehiculeGaranti = vehicule.id;
             }
 
-            const souscripteur = souscripteurModel();
+            let souscripteur = {};
 
-            souscripteur.adresse = adresse_assure;
-            souscripteur.assure = nom_assure;
-            souscripteur.telephone = tel_assure;
-            const souscripteurSave = await souscripteur.save();
+            souscripteur = await souscripteur.findOne({
+                telephone: telephone
+            }).exec();
+
+            if (!souscripteur) {
+                souscripteur = souscripteurModel();
+                souscripteur.adresse = adresse_assure;
+                souscripteur.assure = nom_assure;
+                souscripteur.telephone = tel_assure;
+                const souscripteurSave = await souscripteur.save();
+                garanti.soucripteurGaranti = souscripteurSave.id;
+            }
 
 
             garanti.police = police;
@@ -69,7 +77,6 @@ exports.add = async (req, res) => {
             garanti.durer = durer;
             garanti.cause = cause;
             garanti.cause = cause;
-            garanti.soucripteurGaranti = souscripteurSave.id;
 
             const garantiSave = await garanti.save();
 
