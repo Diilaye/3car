@@ -9,7 +9,8 @@ const garantiCtrl = require('../controllers/garanti');
 const routes = new express.Router();
 
 // Add routes
-routes.get('/', garantiCtrl.add);
+routes.get('/', garantiCtrl.all);
+routes.get('/post', garantiCtrl.add);
 
 
 module.exports = routes;
