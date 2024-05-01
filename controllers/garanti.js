@@ -100,7 +100,7 @@ exports.add = async (req, res) => {
 exports.all = async (req, res) => {
 
 
-    return res.status(404).json({
+    return res.status(200).json({
         message: 'remplir tous les champs',
         data: "",
     })
