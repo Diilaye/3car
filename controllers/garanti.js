@@ -55,7 +55,7 @@ exports.add = async (req, res) => {
 
             let souscripteur = {};
 
-            souscripteur = await souscripteur.findOne({
+            souscripteur = await souscripteurModel.findOne({
                 telephone: telephone
             }).exec();
 
