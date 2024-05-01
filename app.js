@@ -28,12 +28,14 @@ app.use(bodyParser.urlencoded({
 
 const garantiRoute = require('./routes/garanti');
 
+app.use('/v1/api/garntis', garantiRoute);
+
+
 app.get('/', (req, res) => {
     console.log(req.query);
     res.send('ici la terre');
 })
 
-app.use('/v1/api/garntis', garantiRoute);
 
 db().then(_ => {
     const port = process.env.PORT
