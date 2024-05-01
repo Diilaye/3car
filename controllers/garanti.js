@@ -1,5 +1,4 @@
-const garantiModel = require('../models/garanti');
-const souscripteur = require('../models/souscripteur.js');
+const garantiModel = require('../models/garanti.js');
 
 const souscripteurModel = require('../models/souscripteur.js');
 
@@ -94,6 +93,17 @@ exports.add = async (req, res) => {
             data: error,
         })
     }
+
+
+}
+
+exports.all = async (req, res) => {
+
+
+    return res.status(404).json({
+        message: 'remplir tous les champs',
+        data: "",
+    })
 
 
 }
