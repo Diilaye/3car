@@ -28,6 +28,10 @@ const VehiculeModel = new Schema({
         type: String,
         default: ""
     },
+    dateTransfert: {
+        type: String,
+        default: ""
+    },
     durer: {
         type: String,
         default: ""
