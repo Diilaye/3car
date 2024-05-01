@@ -26,7 +26,8 @@ exports.add = async (req, res) => {
                 durer,
                 echeance,
                 temoin,
-                cause
+                cause,
+                dateSuspension
             } = req.query;
 
             let vehicule = {};
@@ -81,9 +82,11 @@ exports.add = async (req, res) => {
             garanti.temoin = temoin;
             garanti.attestation = attestation;
             garanti.effet = effet;
+            if (cause == "SUSPENSION") {
+                garanti.dateSuspension = dateSuspension;
+            }
             garanti.echeance = echeance;
             garanti.durer = durer;
-            garanti.cause = cause;
             garanti.cause = cause;
 
 
