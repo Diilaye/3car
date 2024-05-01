@@ -27,7 +27,7 @@ exports.add = async (req, res) => {
                 echeance,
                 temoin,
                 cause,
-                dateSuspension
+                dateSuspension,
             } = req.query;
 
             let vehicule = {};
