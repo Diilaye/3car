@@ -18,7 +18,8 @@ const SouscriteurModel = new Schema({
 
     telephone: {
         type: String,
-        default: ""
+        default: "",
+        unique: true
     },
 
 }, {
