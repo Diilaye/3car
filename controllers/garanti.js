@@ -53,7 +53,7 @@ exports.add = async (req, res) => {
 
                 vehicule.genre = genre;
                 vehicule.marque = marque;
-                vehicule.imatriculation = immat;
+                vehicule.imatriculation = immat.toUpperCase();
                 vehicule.place = place;
                 vehicule.puissance_fiscale = puissance;
                 const vehiculeSave = await vehicule.save();
