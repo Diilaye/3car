@@ -167,6 +167,12 @@ exports.one = async (req, res) => {
         }).populate(populateObject).exec();
 
 
+        if (garantis[garantis.length - 1].cause == "SUSPENSION" || garantis[garantis.length - 1].cause == "RESILIATION") {
+            return res.status(404).json({
+                message: 'errreur optenue',
+                data: {},
+            })
+        }
 
         let i = 1;
 
