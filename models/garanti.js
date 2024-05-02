@@ -51,6 +51,10 @@ const VehiculeModel = new Schema({
         ref: "vehicule",
     },
 
+    compagnie: {
+        type: String,
+        default: ""
+    }
 
 
 }, {
