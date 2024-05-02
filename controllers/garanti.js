@@ -4,6 +4,14 @@ const souscripteurModel = require('../models/souscripteur.js');
 
 const vehiculeModel = require('../models/vehicule.js');
 
+const populateObject = [{
+    path: 'soucripteurGaranti',
+
+}, {
+    path: 'vehiculeGaranti',
+
+}];
+
 exports.add = async (req, res) => {
 
 
@@ -119,11 +127,53 @@ exports.add = async (req, res) => {
 
 exports.all = async (req, res) => {
 
+    try {
 
-    return res.status(200).json({
-        message: 'remplir tous les champs',
-        data: "",
-    })
+        const garantis = await garantiModel.find({}).populate(populateObject).exec();
 
+        return res.status(200).json({
+            message: 'liste garantis',
+            data: garantis,
+        })
+
+    } catch (error) {
+        return res.status(404).json({
+            message: 'errrur optenue',
+            data: error,
+        })
+    }
+
+
+
+
+
+}
+
+exports.one = async (req, res) => {
+
+    try {
+
+        let { marque } = req.query;
+
+        const vehicule = await vehiculeModel.findOne({
+            imatriculation: marque
+
+        }).exec();
+
+        const garantis = await garantiModel.find({
+            vehiculeGaranti: vehicule.id
+        }).populate(populateObject).exec();
+
+        return res.status(200).json({
+            message: 'liste garantis',
+            data: garantis[garantis.length - 1],
+        })
+
+    } catch (error) {
+        return res.status(404).json({
+            message: 'errreur optenue',
+            data: error,
+        })
+    }
 
 }

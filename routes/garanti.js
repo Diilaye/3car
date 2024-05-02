@@ -10,6 +10,7 @@ const routes = new express.Router();
 
 // Add routes
 routes.get('/', garantiCtrl.all);
+routes.get('/one', garantiCtrl.one);
 routes.get('/post', garantiCtrl.add);
 
 

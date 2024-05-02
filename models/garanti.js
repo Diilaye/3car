@@ -44,7 +44,7 @@ const VehiculeModel = new Schema({
 
     soucripteurGaranti: {
         type: Schema.Types.ObjectId,
-        ref: "vehicule",
+        ref: "souscripteur",
     },
     vehiculeGaranti: {
         type: Schema.Types.ObjectId,
