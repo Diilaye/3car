@@ -166,6 +166,14 @@ exports.one = async (req, res) => {
             vehiculeGaranti: vehicule.id
         }).populate(populateObject).exec();
 
+
+        if (garantis[garantis.length - 1].cause == "SUSPENSION" || garantis[garantis.length - 1].cause == "RESILIATION") {
+            return res.status(404).json({
+                message: 'erreur optanue garantis',
+                data: {},
+            })
+        }
+
         return res.status(200).json({
             message: 'liste garantis',
             data: garantis[garantis.length - 1],
