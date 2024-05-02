@@ -167,17 +167,12 @@ exports.one = async (req, res) => {
         }).populate(populateObject).exec();
 
 
-        if (garantis[garantis.length - 1].cause == "SUSPENSION" || garantis[garantis.length - 1].cause == "RESILIATION") {
-            return res.status(404).json({
-                message: 'erreur optanue garantis',
-                data: {},
-            })
-        }
-
         let i = 1;
 
         while ((Date.now() - Date.parse(`${garantis[garantis.length - i].effet.substring(0, 4)}-${garantis[garantis.length - i].effet.substring(4, 6)}-${garantis[garantis.length - i].effet.substring(6, 8)}`)) <= 0) {
-            i++;
+            if (garantis[garantis.length - i].cause != "SUSPENSION" || garantis[garantis.length - i].cause != "RESILIATION") {
+                i++;
+            }
         }
 
         return res.status(200).json({
