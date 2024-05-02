@@ -31,12 +31,9 @@ const assuranceRoute = require('./routes/assurance');
 
 app.use('/v1/api/garantis', garantiRoute);
 app.use('/v1/api/assurance', assuranceRoute);
+app.use(express.static(__dirname + '/web/'));
 
-
-app.get('/', (req, res) => {
-    console.log(req.query);
-    res.send('ici la terre');
-})
+app.get('/', (req, res) => res.sendFile(path.resolve('web/index.html')));
 
 
 db().then(_ => {
