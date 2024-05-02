@@ -45,7 +45,7 @@ exports.add = async (req, res) => {
 
 
             vehicule = await vehiculeModel.findOne({
-                marque: marque
+                imatriculation: immat
             }).exec();
 
             if (!vehicule) {
