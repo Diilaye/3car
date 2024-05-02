@@ -167,12 +167,20 @@ exports.one = async (req, res) => {
         }).populate(populateObject).exec();
 
 
+
         let i = 1;
 
         while ((Date.now() - Date.parse(`${garantis[garantis.length - i].effet.substring(0, 4)}-${garantis[garantis.length - i].effet.substring(4, 6)}-${garantis[garantis.length - i].effet.substring(6, 8)}`)) <= 0) {
             if (garantis[garantis.length - i].cause != "SUSPENSION" || garantis[garantis.length - i].cause != "RESILIATION") {
                 i++;
             }
+        }
+
+        if (garantis[garantis.length - i].cause != "SUSPENSION" || garantis[garantis.length - i].cause != "RESILIATION") {
+            return res.status(404).json({
+                message: 'errreur optenue',
+                data: {},
+            })
         }
 
         return res.status(200).json({
