@@ -166,14 +166,6 @@ exports.one = async (req, res) => {
             vehiculeGaranti: vehicule.id
         }).populate(populateObject).exec();
 
-
-        if (garantis[garantis.length - 1].cause == "SUSPENSION" || garantis[garantis.length - 1].cause == "RESILIATION") {
-            return res.status(404).json({
-                message: 'errreur optenue',
-                data: {},
-            })
-        }
-
         let i = 1;
 
         while ((Date.now() - Date.parse(`${garantis[garantis.length - i].effet.substring(0, 4)}-${garantis[garantis.length - i].effet.substring(4, 6)}-${garantis[garantis.length - i].effet.substring(6, 8)}`)) <= 0) {
