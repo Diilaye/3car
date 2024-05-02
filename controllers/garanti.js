@@ -176,7 +176,7 @@ exports.one = async (req, res) => {
             }
         }
 
-        if (garantis[garantis.length - i].cause != "SUSPENSION" || garantis[garantis.length - i].cause != "RESILIATION") {
+        if (garantis[garantis.length - i].cause == "SUSPENSION" || garantis[garantis.length - i].cause == "RESILIATION") {
             return res.status(404).json({
                 message: 'errreur optenue',
                 data: {},
