@@ -174,9 +174,15 @@ exports.one = async (req, res) => {
             })
         }
 
+        let i = 1;
+
+        while ((Date.now() - Date.parse(`${garantis[garantis.length - i].effet.substring(0, 4)}-${garantis[garantis.length - i].effet.substring(4, 6)}-${garantis[garantis.length - i].effet.substring(6, 8)}`)) <= 0) {
+            i++;
+        }
+
         return res.status(200).json({
             message: 'liste garantis',
-            data: garantis[garantis.length - 1],
+            data: garantis[garantis.length - i],
         })
 
     } catch (error) {
