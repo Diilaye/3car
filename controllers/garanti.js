@@ -142,7 +142,7 @@ exports.add = async (req, res) => {
 
             return axios.request(config).then((response) => {
                 console.log("response client");
-                return res.json(JSON.stringify(response.data));
+                return res.json(JSON.stringify(response.status));
             })
                 .catch((error) => {
                     console.log(error);
