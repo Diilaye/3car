@@ -63,22 +63,28 @@ const VehiculeModel = new Schema({
     vaf: {
         type: String,
         default: ""
-    }, vvn: {
+    },
+    vvn: {
         type: String,
         default: ""
-    }, recour: {
+    },
+    recour: {
         type: String,
         default: ""
-    }, vol: {
+    },
+    vol: {
         type: String,
         default: ""
-    }, inc: {
+    },
+    inc: {
         type: String,
         default: ""
-    }, pt: {
+    },
+    pt: {
         type: String,
         default: ""
-    }, gb: {
+    },
+    gb: {
         type: String,
         default: ""
     },

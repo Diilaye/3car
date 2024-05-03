@@ -25,13 +25,11 @@ const SouscriteurModel = new Schema({
     compagnie: {
         type: String,
         default: "",
-        unique: true
     },
 
     numeroClientCompagnie: {
         type: String,
         default: "",
-        unique: true
     },
 
 }, {
