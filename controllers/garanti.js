@@ -6,7 +6,6 @@ const vehiculeModel = require('../models/vehicule.js');
 
 const axios = require('axios');
 
-const request = require('sync-request');
 
 
 require('dotenv').config({
