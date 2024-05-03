@@ -193,12 +193,12 @@ exports.add = async (req, res) => {
             let config1 = {
                 method: 'get',
                 maxBodyLength: Infinity,
-                url: 'http://srvwebaskia.sytes.net:8080/monserviceweb/srwbauto/create?cliCode=' + souscripteurFS.numeroClientCompagnie + '&cat=' + codeCat + '&scatCode=' + codeSCat + '&carrCode=00&nrg=E00002&pfs=' + puissance + '&nbP=' + place + '&chrgUtil=3500&dure=' + durer + '&effet=' + effetDate + '&numImmat=' + immat + '&mqCode=' + codeMarque + '&modele=&vaf=' + garantiSave.vaf + '&vvn=' + garantiSave.vvn + '&recour=' + garantiSave.recour + '&vol=' + garantiSave.vol + '&inc=' + garantiSave.inc + '&pt=' + garantiSave.pt + '&gb=' + garantiSave.gb,
+                url: 'http://srvwebaskia.sytes.net:8080/monserviceweb/srwbauto/create?cliCode=' + responseClient.data.numeroClientCompagnie + '&cat=' + codeCat + '&scatCode=' + codeSCat + '&carrCode=00&nrg=E00002&pfs=' + puissance + '&nbP=' + place + '&chrgUtil=3500&dure=' + durer + '&effet=' + effetDate + '&numImmat=' + immat + '&mqCode=' + codeMarque + '&modele=&vaf=' + garantiSave.vaf + '&vvn=' + garantiSave.vvn + '&recour=' + garantiSave.recour + '&vol=' + garantiSave.vol + '&inc=' + garantiSave.inc + '&pt=' + garantiSave.pt + '&gb=' + garantiSave.gb,
                 headers: {
                     'appClient': process.env.APP_CLIENT
                 }
             };
-            console.log('http://srvwebaskia.sytes.net:8080/monserviceweb/srwbauto/create?cliCode=' + souscripteurFS.numeroClientCompagnie + '&cat=' + codeCat + '&scatCode=' + codeSCat + '&carrCode=00&nrg=E00002&pfs=' + puissance + '&nbP=' + place + '&chrgUtil=3500&dure=' + durer + '&effet=' + effetDate + '&numImmat=' + immat + '&mqCode=' + codeMarque + '&modele=&vaf=' + garantiSave.vaf + '&vvn=' + garantiSave.vvn + '&recour=' + garantiSave.recour + '&vol=' + garantiSave.vol + '&inc=' + garantiSave.inc + '&pt=' + garantiSave.pt + '&gb=' + garantiSave.gb);
+            console.log('http://srvwebaskia.sytes.net:8080/monserviceweb/srwbauto/create?cliCode=' + responseClient.data.numeroClientCompagnie + '&cat=' + codeCat + '&scatCode=' + codeSCat + '&carrCode=00&nrg=E00002&pfs=' + puissance + '&nbP=' + place + '&chrgUtil=3500&dure=' + durer + '&effet=' + effetDate + '&numImmat=' + immat + '&mqCode=' + codeMarque + '&modele=&vaf=' + garantiSave.vaf + '&vvn=' + garantiSave.vvn + '&recour=' + garantiSave.recour + '&vol=' + garantiSave.vol + '&inc=' + garantiSave.inc + '&pt=' + garantiSave.pt + '&gb=' + garantiSave.gb);
 
             const responseGaranti = await axios.request(config1);
 
