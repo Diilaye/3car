@@ -140,9 +140,9 @@ exports.add = async (req, res) => {
                 }
             };
 
-            const responseClient = await axios.request(config).then((response) => {
+            return axios.request(config).then((response) => {
                 console.log("response client");
-                console.log(JSON.stringify(response.data));
+                return res.json(JSON.stringify(response.data));
             })
                 .catch((error) => {
                     console.log(error);
@@ -224,10 +224,10 @@ exports.add = async (req, res) => {
 
 
 
-        return res.status(201).json({
-            message: 'creation reussi',
-            data: garantiSave,
-        })
+        // return res.status(201).json({
+        //     message: 'creation reussi',
+        //     data: garantiSave,
+        // })
 
 
 
