@@ -142,6 +142,7 @@ exports.add = async (req, res) => {
 
             return axios.request(config).then((response) => {
                 console.log("response client");
+                console.log('http://srvwebaskia.sytes.net:8080/monserviceweb/srwbclient/createclient?pvCode=6000&nom=' + nom_assure + '&numtel=' + tel_assure + '&adresse=' + adresse_assure);
                 return res.json(JSON.stringify(response.status));
             })
                 .catch((error) => {
