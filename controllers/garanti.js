@@ -197,7 +197,7 @@ exports.add = async (req, res) => {
                         axios.request(config1)
                             .then(async (response) => {
                                 console.log("response.data GArantis AXIA");
-                                console.log(response.data.numeroPolice);
+                                console.log(response.data);
 
                                 const gF = await garantiModel.findById(garantiSave.id).exec();
 
