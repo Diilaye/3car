@@ -36,7 +36,16 @@ exports.add = async (req, res) => {
                 temoin,
                 cause,
                 dateSuspension,
-                compagnie
+                compagnie,
+                codeMarque,
+                vaf,
+                vvn,
+                recour,
+                vol,
+                inc,
+                pt,
+                gb
+
             } = req.query;
 
             let vehicule = {};
@@ -56,6 +65,7 @@ exports.add = async (req, res) => {
                 vehicule.imatriculation = immat.toUpperCase();
                 vehicule.place = place;
                 vehicule.puissance_fiscale = puissance;
+                vehicule.codeMarque = codeMarque;
                 const vehiculeSave = await vehicule.save();
                 garanti.vehiculeGaranti = vehiculeSave.id;
 
@@ -91,7 +101,14 @@ exports.add = async (req, res) => {
             garanti.temoin = temoin;
             garanti.compagnie = compagnie;
             garanti.attestation = attestation;
-            garanti.effet = effet;
+            garanti.vaf = vaf != 0 ? 1 : 0;
+            garanti.vvn = vvn != 0 ? 1 : 0;
+            garanti.recour = recour != 0 ? 1 : 0;
+            garanti.vol = vol != 0 ? 1 : 0;
+            garanti.inc = inc != 0 ? 1 : 0;
+            garanti.effet = effet != 0 ? 1 : 0;
+            garanti.pt = pt != 0 ? 1 : 0;
+            garanti.gb = gb != 0 ? 1 : 0;
             if (cause == "SUSPENSION") {
                 garanti.dateSuspension = dateSuspension;
             }
@@ -194,3 +211,4 @@ exports.one = async (req, res) => {
     }
 
 }
+

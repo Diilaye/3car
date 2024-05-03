@@ -54,8 +54,29 @@ const VehiculeModel = new Schema({
     compagnie: {
         type: String,
         default: ""
-    }
-
+    },
+    vaf: {
+        type: String,
+        default: ""
+    }, vvn: {
+        type: String,
+        default: ""
+    }, recour: {
+        type: String,
+        default: ""
+    }, vol: {
+        type: String,
+        default: ""
+    }, inc: {
+        type: String,
+        default: ""
+    }, pt: {
+        type: String,
+        default: ""
+    }, gb: {
+        type: String,
+        default: ""
+    },
 
 }, {
     toJSON: {

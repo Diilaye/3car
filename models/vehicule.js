@@ -29,6 +29,11 @@ const VehiculeModel = new Schema({
         default: ""
     },
 
+    codeMarque: {
+        type: String,
+        default: ""
+    },
+
 }, {
     toJSON: {
         transform: function (doc, ret) {
