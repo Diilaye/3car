@@ -141,8 +141,10 @@ exports.add = async (req, res) => {
             axios.request(config)
                 .then(async (response) => {
 
+                    console.log("response.data.cliNumero");
                     console.log(response.data.cliNumero);
                     console.log(response.data);
+                    console.log("response.data");
 
                     const souscripteurF = await souscripteurModel.findById(garantiSave.soucripteurGaranti).exec();
 
@@ -190,15 +192,15 @@ exports.add = async (req, res) => {
                             'appClient': process.env.APP_CLIENT
                         }
                     };
-
+                    console.log("url ,");
                     console.log('http://srvwebaskia.sytes.net:8080/monserviceweb/srwbauto/create?cliCode=' + souscripteurFS.numeroClientCompagnie + '&cat=' + codeCat + '&scatCode=' + codeSCat + '&carrCode=00&nrg=E00002&pfs=' + puissance + '&nbP=' + place + '&chrgUtil=3500&dure =' + durer + '&effet=' + effetDate + '&numImmat=' + immat + '&mqCode=' + codeMarque + '&modele=XXXX&vaf=' + vaf + '&vvn=' + vvn + '&recour=' + recour + '&vol=' + vol + '&inc=' + inc + '&pt=' + pt + '&gb=' + gb);
-                    axios.request(config1)
-                        .then((response) => {
-                            console.log(response.data);
-                        })
-                        .catch((error) => {
-                            console.log(error);
-                        });
+                    // axios.request(config1)
+                    //     .then((response) => {
+                    //         console.log(response.data);
+                    //     })
+                    //     .catch((error) => {
+                    //         console.log(error);
+                    //     });
 
 
                 })
