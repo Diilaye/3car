@@ -6,6 +6,11 @@ const Schema = mongoose.Schema;
 const VehiculeModel = new Schema({
 
 
+    policeCompagnie: {
+        type: String,
+        default: ""
+    },
+
     police: {
         type: String,
         default: ""
