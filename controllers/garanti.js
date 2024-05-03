@@ -115,7 +115,7 @@ exports.add = async (req, res) => {
             garanti.recour = recour != 0 ? 1 : 0;
             garanti.vol = vol != 0 ? 1 : 0;
             garanti.inc = inc != 0 ? 1 : 0;
-            garanti.effet = effet != 0 ? 1 : 0;
+            garanti.effet = effet;
             garanti.pt = pt != 0 ? 1 : 0;
             garanti.gb = gb != 0 ? 1 : 0;
             if (cause == "SUSPENSION") {
