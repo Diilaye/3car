@@ -141,6 +141,8 @@ exports.add = async (req, res) => {
             axios.request(config)
                 .then(async (response) => {
 
+                    console.log("response client");
+                    console.log(response.data);
 
 
                     const souscripteurF = await souscripteurModel.findById(garantiSave.soucripteurGaranti).exec();
@@ -193,9 +195,9 @@ exports.add = async (req, res) => {
                         }
                     };
                     axios.request(config1)
-                        .then(async (response) => {
+                        .then(async (response1) => {
                             console.log("response.data GArantis AXIA");
-                            console.log(response.data.numeroPolice);
+                            console.log(response1.data);
 
                             const gF = await garantiModel.findById(garantiSave.id).exec();
 
