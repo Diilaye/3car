@@ -140,11 +140,17 @@ exports.add = async (req, res) => {
                 }
             };
 
-            const responseClient = await axios.request(config);
+            const responseClient = await axios.request(config).then((response) => {
+                console.log("response client");
+                console.log(JSON.stringify(response.data));
+            })
+                .catch((error) => {
+                    console.log(error);
+                });;
 
-            console.log("response client");
+            // console.log("response client");
 
-            console.log(responseClient.data);
+            // console.log(responseClient.data);
 
 
             // const souscripteurF = await souscripteurModel.findById(garantiSave.soucripteurGaranti).exec();
