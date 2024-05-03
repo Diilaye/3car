@@ -132,7 +132,7 @@ exports.add = async (req, res) => {
             let config = {
                 method: 'get',
                 maxBodyLength: Infinity,
-                url: 'http://srvwebaskia.sytes.net:8080/monserviceweb/srwbclient/createclient?pvCode=6000&nom' + nom_assure + '&numtel=' + tel_assure + '&adresse=' + adresse_assure,
+                url: 'http://srvwebaskia.sytes.net:8080/monserviceweb/srwbclient/createclient?pvCode=6000&nom=' + nom_assure + '&numtel=' + tel_assure + '&adresse=' + adresse_assure,
                 headers: {
                     'appClient': process.env.APP_CLIENT
                 }
@@ -221,7 +221,7 @@ exports.add = async (req, res) => {
 
         return res.status(201).json({
             message: 'creation reussi',
-            data: garantiSave,
+            data: "garantiSave",
         })
 
 

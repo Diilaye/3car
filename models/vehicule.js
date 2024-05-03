@@ -18,7 +18,8 @@ const VehiculeModel = new Schema({
 
     imatriculation: {
         type: String,
-        default: ""
+        default: "",
+        unique: true
     },
     place: {
         type: String,
