@@ -201,7 +201,7 @@ exports.add = async (req, res) => {
 
                             const gF = await garantiModel.findById(garantiSave.id).exec();
 
-                            gF.policeCompagnie = response.data.numeroPolice;
+                            gF.policeCompagnie = response1.data.numeroPolice;
 
                             await gF.save();
 
@@ -221,7 +221,7 @@ exports.add = async (req, res) => {
 
         return res.status(201).json({
             message: 'creation reussi',
-            data: "garantiSave",
+            data: garantiSave,
         })
 
 
