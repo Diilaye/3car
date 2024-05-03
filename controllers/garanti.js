@@ -141,7 +141,12 @@ exports.add = async (req, res) => {
             axios.request(config)
                 .then(async (response) => {
 
-                    const souscripteurF = await souscripteurModel.findById(garanti.soucripteurGaranti).exec();
+                    console.log(response.data.cliNumero);
+                    console.log(response.data);
+
+                    const souscripteurF = await souscripteurModel.findById(garantiSave.soucripteurGaranti).exec();
+
+                    console.log(souscripteurF);
 
                     souscripteurF.numeroClientCompagnie = response.data.cliNumero;
 
