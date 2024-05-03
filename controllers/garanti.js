@@ -180,13 +180,13 @@ exports.add = async (req, res) => {
                     let config1 = {
                         method: 'get',
                         maxBodyLength: Infinity,
-                        url: 'http://srvwebaskia.sytes.net:8080/monserviceweb/srwbauto/create?cliCode=' + souscripteurFS.numeroClientCompagnie + '&cat=' + codeCat + '&scatCode=' + codeSCat + '&carrCode=00&nrg=E00002&pfs=' + puissance + '&nbP=' + place + '&chrgUtil=3500&dure =' + durer + '&effet=' + effetDate + '&numImmat=' + immat + '&mqCode=' + codeMarque + '&modele=XXXX&vaf=' + vaf + '&vvn=' + vvn + '&recour=' + recour + '&vol=' + vol + '&inc=' + inc + '&pt=' + pt + '&gb=' + bg,
+                        url: 'http://srvwebaskia.sytes.net:8080/monserviceweb/srwbauto/create?cliCode=' + souscripteurFS.numeroClientCompagnie + '&cat=' + codeCat + '&scatCode=' + codeSCat + '&carrCode=00&nrg=E00002&pfs=' + puissance + '&nbP=' + place + '&chrgUtil=3500&dure =' + durer + '&effet=' + effetDate + '&numImmat=' + immat + '&mqCode=' + codeMarque + '&modele=XXXX&vaf=' + vaf + '&vvn=' + vvn + '&recour=' + recour + '&vol=' + vol + '&inc=' + inc + '&pt=' + pt + '&gb=' + gb,
                         headers: {
                             'appClient': process.env.APP_CLIENT
                         }
                     };
 
-                    console.log('http://srvwebaskia.sytes.net:8080/monserviceweb/srwbauto/create?cliCode=' + souscripteurFS.numeroClientCompagnie + '&cat=' + codeCat + '&scatCode=' + codeSCat + '&carrCode=00&nrg=E00002&pfs=' + puissance + '&nbP=' + place + '&chrgUtil=3500&dure =' + durer + '&effet=' + effetDate + '&numImmat=' + immat + '&mqCode=' + codeMarque + '&modele=XXXX&vaf=' + vaf + '&vvn=' + vvn + '&recour=' + recour + '&vol=' + vol + '&inc=' + inc + '&pt=' + pt + '&gb=' + bg);
+                    console.log('http://srvwebaskia.sytes.net:8080/monserviceweb/srwbauto/create?cliCode=' + souscripteurFS.numeroClientCompagnie + '&cat=' + codeCat + '&scatCode=' + codeSCat + '&carrCode=00&nrg=E00002&pfs=' + puissance + '&nbP=' + place + '&chrgUtil=3500&dure =' + durer + '&effet=' + effetDate + '&numImmat=' + immat + '&mqCode=' + codeMarque + '&modele=XXXX&vaf=' + vaf + '&vvn=' + vvn + '&recour=' + recour + '&vol=' + vol + '&inc=' + inc + '&pt=' + pt + '&gb=' + gb);
                     axios.request(config1)
                         .then((response) => {
                             console.log(response.data);
