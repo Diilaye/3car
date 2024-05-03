@@ -22,6 +22,18 @@ const SouscriteurModel = new Schema({
         unique: true
     },
 
+    compagnie: {
+        type: String,
+        default: "",
+        unique: true
+    },
+
+    numeroClientCompagnie: {
+        type: String,
+        default: "",
+        unique: true
+    },
+
 }, {
     toJSON: {
         transform: function (doc, ret) {

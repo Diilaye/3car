@@ -78,6 +78,8 @@ const VehiculeModel = new Schema({
         default: ""
     },
 
+
+
 }, {
     toJSON: {
         transform: function (doc, ret) {

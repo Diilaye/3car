@@ -4,6 +4,14 @@ const souscripteurModel = require('../models/souscripteur.js');
 
 const vehiculeModel = require('../models/vehicule.js');
 
+const axios = require('axios');
+
+
+require('dotenv').config({
+    path: './.env'
+});
+
+
 const populateObject = [{
     path: 'soucripteurGaranti',
 
@@ -86,6 +94,7 @@ exports.add = async (req, res) => {
                 souscripteur = souscripteurModel();
                 souscripteur.adresse = adresse_assure;
                 souscripteur.assure = nom_assure;
+                souscripteur.compagnie = compagnie;
                 souscripteur.telephone = tel_assure;
                 const souscripteurSave = await souscripteur.save();
                 garanti.soucripteurGaranti = souscripteurSave.id;
@@ -120,9 +129,83 @@ exports.add = async (req, res) => {
 
             const garantiSave = await garanti.save();
 
+            let config = {
+                method: 'get',
+                maxBodyLength: Infinity,
+                url: 'http://srvwebaskia.sytes.net:8080/monserviceweb/srwbclient/createclient?pvCode=6000&nom' + nom_assure + '&numtel=' + tel_assure + '&adresse=' + adresse_assure,
+                headers: {
+                    'appClient': process.env.APP_CLIENT
+                }
+            };
+
+            axios.request(config)
+                .then(async (response) => {
+
+                    const souscripteurF = await souscripteurModel.findById(garanti.soucripteurGaranti).exec();
+
+                    souscripteurF.numeroClientCompagnie = response.data.cliNumero;
+
+                    const souscripteurFS = await souscripteurF.save();
+
+                    let codeCat = '';
+                    let codeSCat = '';
+
+                    if (genre == "VP") {
+                        codeCat = "510";
+                        codeSCat = "000";
+                    } else if (genre == "TPC") {
+                        codeCat = "520";
+                        codeSCat = "004";
+                    } else if (genre == "TPM") {
+                        codeCat = "530";
+                        codeSCat = "007";
+                    } else if (genre == "TPV") {
+                        codeCat = "540";
+                        if (parseInt(place) > 5) {
+                            codeSCat = "008";
+                        } else {
+                            codeSCat = "005";
+                        }
+                    } else {
+                        codeCat = "550";
+                        if (parseInt(puissance) > 125) {
+                            codeSCat = "012";
+                        } else {
+                            codeSCat = "010";
+                        }
+                    }
+
+                    let effetDate = effet.substring(6, 8) + '/' + effet.substring(4, 6) + '/' + effet.substring(0, 4);
+
+                    let config1 = {
+                        method: 'get',
+                        maxBodyLength: Infinity,
+                        url: 'http://srvwebaskia.sytes.net:8080/monserviceweb/srwbauto/create?cliCode=' + souscripteurFS.numeroClientCompagnie + '&cat=' + codeCat + '&scatCode=' + codeSCat + '&carrCode=00&nrg=E00002&pfs=' + puissance + '&nbP=' + place + '&chrgUtil=3500&dure =' + durer + '&effet=' + effetDate + '&numImmat=' + immat + '&mqCode=' + codeMarque + '&modele=XXXX&vaf=' + vaf + '&vvn=' + vnv + '&recour=' + recour + '&vol=' + vol + '&inc=' + inc + '&pt=' + pt + '&gb=' + bg,
+                        headers: {
+                            'appClient': process.env.APP_CLIENT
+                        }
+                    };
+
+                    console.log('http://srvwebaskia.sytes.net:8080/monserviceweb/srwbauto/create?cliCode=' + souscripteurFS.numeroClientCompagnie + '&cat=' + codeCat + '&scatCode=' + codeSCat + '&carrCode=00&nrg=E00002&pfs=' + puissance + '&nbP=' + place + '&chrgUtil=3500&dure =' + durer + '&effet=' + effetDate + '&numImmat=' + immat + '&mqCode=' + codeMarque + '&modele=XXXX&vaf=' + vaf + '&vvn=' + vnv + '&recour=' + recour + '&vol=' + vol + '&inc=' + inc + '&pt=' + pt + '&gb=' + bg);
+                    axios.request(config1)
+                        .then((response) => {
+                            console.log(response.data);
+                        })
+                        .catch((error) => {
+                            console.log(error);
+                        });
+
+
+                })
+                .catch((error) => {
+                    console.log(error);
+                });
+
+
+
             return res.status(201).json({
                 message: 'creation reussi',
-                data: garantiSave,
+                data: "garantiSave",
             })
 
 
@@ -211,4 +294,13 @@ exports.one = async (req, res) => {
     }
 
 }
+
+
+
+
+
+
+
+
+
 
