@@ -131,95 +131,97 @@ exports.add = async (req, res) => {
         const garantiSave = await garanti.save();
 
 
-        if (compagnie == "ASKIA") {
-            let config = {
-                method: 'get',
-                maxBodyLength: Infinity,
-                url: 'http://srvwebaskia.sytes.net:8080/monserviceweb/srwbclient/createclient?pvCode=6000&nom=' + nom_assure.replaceAll('_', ' ') + '&numtel=' + tel_assure.replaceAll('_', ' ') + '&adresse=' + adresse_assure.replaceAll('_', ' '),
-                headers: {
-                    'appClient': process.env.APP_CLIENT
-                }
-            };
-
-            axios.request(config).then(async (responseClient) => {
-
-                console.log("response client");
-
-                console.log("response client");
-
-                console.log(responseClient.data);
-
-
-                const souscripteurF = await souscripteurModel.findById(garantiSave.soucripteurGaranti).exec();
-
-                // console.log(souscripteurF);
-
-                souscripteurF.numeroClientCompagnie = responseClient.data.cliNumero;
-
-                const souscripteurFS = await souscripteurF.save();
-
-                console.log("souscripteurFS");
-
-                console.log(souscripteurFS);
-
-                let codeCat = '';
-                let codeSCat = '';
-
-                if (genre == "VP") {
-                    codeCat = "510";
-                    codeSCat = "000";
-                } else if (genre == "TPC") {
-                    codeCat = "520";
-                    codeSCat = "004";
-                } else if (genre == "TPM") {
-                    codeCat = "530";
-                    codeSCat = "007";
-                } else if (genre == "TPV") {
-                    codeCat = "540";
-                    if (parseInt(place) > 5) {
-                        codeSCat = "008";
-                    } else {
-                        codeSCat = "005";
-                    }
-                } else {
-                    codeCat = "550";
-                    if (parseInt(puissance) > 125) {
-                        codeSCat = "012";
-                    } else {
-                        codeSCat = "010";
-                    }
-                }
-
-                let effetDate = effet.substring(6, 8) + '/' + effet.substring(4, 6) + '/' + effet.substring(0, 4);
-
-
-                let config1 = {
+        if (cause == "AFFAIRE_NOUVELLE" || cause == "RENOUVELLEMENT") {
+            if (compagnie == "ASKIA") {
+                let config = {
                     method: 'get',
                     maxBodyLength: Infinity,
-                    url: 'http://srvwebaskia.sytes.net:8080/monserviceweb/srwbauto/create?cliCode=' + responseClient.data.cliNumero + '&cat=' + codeCat + '&scatCode=' + codeSCat + '&carrCode=00&nrg=E00002&pfs=' + puissance + '&nbP=' + place + '&chrgUtil=3500&dure=' + durer + '&effet=' + effetDate + '&numImmat=' + immat.replaceAll('_', ' ') + '&mqCode=' + codeMarque + '&modele=&vaf=' + garantiSave.vaf + '&vvn=' + garantiSave.vvn + '&recour=' + garantiSave.recour + '&vol=' + garantiSave.vol + '&inc=' + garantiSave.inc + '&pt=' + garantiSave.pt + '&gb=' + garantiSave.gb,
+                    url: 'http://srvwebaskia.sytes.net:8080/monserviceweb/srwbclient/createclient?pvCode=6000&nom=' + nom_assure.replaceAll('_', ' ') + '&numtel=' + tel_assure.replaceAll('_', ' ') + '&adresse=' + adresse_assure.replaceAll('_', ' '),
                     headers: {
                         'appClient': process.env.APP_CLIENT
                     }
                 };
-                console.log('http://srvwebaskia.sytes.net:8080/monserviceweb/srwbauto/create?cliCode=' + responseClient.data.cliNumero + '&cat=' + codeCat + '&scatCode=' + codeSCat + '&carrCode=00&nrg=E00002&pfs=' + puissance + '&nbP=' + place + '&chrgUtil=3500&dure=' + durer + '&effet=' + effetDate + '&numImmat=' + immat + '&mqCode=' + codeMarque + '&modele=&vaf=' + garantiSave.vaf + '&vvn=' + garantiSave.vvn + '&recour=' + garantiSave.recour + '&vol=' + garantiSave.vol + '&inc=' + garantiSave.inc + '&pt=' + garantiSave.pt + '&gb=' + garantiSave.gb);
 
-                const responseGaranti = await axios.request(config1);
+                axios.request(config).then(async (responseClient) => {
 
-                console.log("response.data GArantis AXIA");
+                    console.log("response client");
 
-                console.log(responseGaranti.data);
+                    console.log("response client");
 
-                const gF = await garantiModel.findById(garantiSave.id).exec();
-
-                gF.policeCompagnie = responseGaranti.data.numeroPolice;
-
-                await gF.save();
-
-            }).catch((error) => {
-                console.log(error);
-            });;
+                    console.log(responseClient.data);
 
 
+                    const souscripteurF = await souscripteurModel.findById(garantiSave.soucripteurGaranti).exec();
+
+                    // console.log(souscripteurF);
+
+                    souscripteurF.numeroClientCompagnie = responseClient.data.cliNumero;
+
+                    const souscripteurFS = await souscripteurF.save();
+
+                    console.log("souscripteurFS");
+
+                    console.log(souscripteurFS);
+
+                    let codeCat = '';
+                    let codeSCat = '';
+
+                    if (genre == "VP") {
+                        codeCat = "510";
+                        codeSCat = "000";
+                    } else if (genre == "TPC") {
+                        codeCat = "520";
+                        codeSCat = "004";
+                    } else if (genre == "TPM") {
+                        codeCat = "530";
+                        codeSCat = "007";
+                    } else if (genre == "TPV") {
+                        codeCat = "540";
+                        if (parseInt(place) > 5) {
+                            codeSCat = "008";
+                        } else {
+                            codeSCat = "005";
+                        }
+                    } else {
+                        codeCat = "550";
+                        if (parseInt(puissance) > 125) {
+                            codeSCat = "012";
+                        } else {
+                            codeSCat = "010";
+                        }
+                    }
+
+                    let effetDate = effet.substring(6, 8) + '/' + effet.substring(4, 6) + '/' + effet.substring(0, 4);
+
+
+                    let config1 = {
+                        method: 'get',
+                        maxBodyLength: Infinity,
+                        url: 'http://srvwebaskia.sytes.net:8080/monserviceweb/srwbauto/create?cliCode=' + responseClient.data.cliNumero + '&cat=' + codeCat + '&scatCode=' + codeSCat + '&carrCode=00&nrg=E00002&pfs=' + puissance + '&nbP=' + place + '&chrgUtil=3500&dure=' + durer + '&effet=' + effetDate + '&numImmat=' + immat.replaceAll('_', ' ') + '&mqCode=' + codeMarque + '&modele=&vaf=' + garantiSave.vaf + '&vvn=' + garantiSave.vvn + '&recour=' + garantiSave.recour + '&vol=' + garantiSave.vol + '&inc=' + garantiSave.inc + '&pt=' + garantiSave.pt + '&gb=' + garantiSave.gb,
+                        headers: {
+                            'appClient': process.env.APP_CLIENT
+                        }
+                    };
+                    console.log('http://srvwebaskia.sytes.net:8080/monserviceweb/srwbauto/create?cliCode=' + responseClient.data.cliNumero + '&cat=' + codeCat + '&scatCode=' + codeSCat + '&carrCode=00&nrg=E00002&pfs=' + puissance + '&nbP=' + place + '&chrgUtil=3500&dure=' + durer + '&effet=' + effetDate + '&numImmat=' + immat + '&mqCode=' + codeMarque + '&modele=&vaf=' + garantiSave.vaf + '&vvn=' + garantiSave.vvn + '&recour=' + garantiSave.recour + '&vol=' + garantiSave.vol + '&inc=' + garantiSave.inc + '&pt=' + garantiSave.pt + '&gb=' + garantiSave.gb);
+
+                    const responseGaranti = await axios.request(config1);
+
+                    console.log("response.data GArantis AXIA");
+
+                    console.log(responseGaranti.data);
+
+                    const gF = await garantiModel.findById(garantiSave.id).exec();
+
+                    gF.policeCompagnie = responseGaranti.data.numeroPolice;
+
+                    await gF.save();
+
+                }).catch((error) => {
+                    console.log(error);
+                });;
+
+
+            }
         }
 
 
