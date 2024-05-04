@@ -28,9 +28,11 @@ app.use(bodyParser.urlencoded({
 
 const garantiRoute = require('./routes/garanti');
 const assuranceRoute = require('./routes/assurance');
+const voyageRoute = require('./routes/voyage');
 
 app.use('/v1/api/garantis', garantiRoute);
-app.use('/v1/api/assurance', assuranceRoute);
+app.use('/v1/api/assurances', assuranceRoute);
+app.use('/v1/api/voyages', voyageRoute);
 
 app.get('/', (req, res) => res.send('ici la terre'));
 
