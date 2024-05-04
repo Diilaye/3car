@@ -272,7 +272,7 @@ exports.one = async (req, res) => {
         let { marque } = req.query;
 
         const vehicule = await vehiculeModel.findOne({
-            imatriculation: marque
+            imatriculation: marque.toUpperCase()
 
         }).exec();
 
