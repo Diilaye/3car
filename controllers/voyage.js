@@ -6,8 +6,9 @@ exports.add = async (req, res) => {
 
 
 
-    try {
 
+
+    try {
 
         let {
 
@@ -62,6 +63,8 @@ exports.add = async (req, res) => {
             voyage.lieuDest = lieuDest;
             voyage.police = police;
             voyage.compagnie = compagnie;
+            voyage.policeCompagnie = "responseGaranti.data.numeroPolice";
+            voyage.cliCode = "responseClient.data.cliNumero";
 
             const voyageSave = await voyage.save();
 
@@ -76,7 +79,9 @@ exports.add = async (req, res) => {
                     }
                 };
 
-                axios.request(config).then(async (responseClient) => {
+
+
+                return axios.request(config).then(async (responseClient) => {
 
                     console.log("response client");
 
@@ -91,11 +96,13 @@ exports.add = async (req, res) => {
                     let config1 = {
                         method: 'get',
                         maxBodyLength: Infinity,
-                        url: 'http://srvwebaskia.sytes.net:8080/monserviceweb/srwbvoyage/create?cliCode=' + responseClient.data.cliNumero + '&zn=' + zone + '&duree=' + duree + '&effet=' + effetDate + '&numPassport=' + numPassport + '&dtDeliv=' + dtDelivDate + '&dtExpir=' + dtExpirDate + '&lieuNais=' + lieuNais + '&dtNais=' + dtNaisDate + '&lieuDepart=' + lieuDepart + '&lieuDest=' + lieuDest + '&assure=' + assure,
+                        url: 'http://srvwebaskia.sytes.net:8080/monserviceweb/srwbvoyage/create?cliCode=' + responseClient.data.cliNumero + '&zn=001' + '&duree=' + duree + '&effet=' + effetDate + '&numPassport=' + numPassport + '&dtDeliv=' + dtDelivDate + '&dtExpir=' + dtExpirDate + '&lieuNais=' + lieuNais + '&dtNais=' + dtNaisDate + '&lieuDepart=' + lieuDepart + '&lieuDest=' + lieuDest + '&assure=' + assure,
                         headers: {
                             'appClient': process.env.APP_CLIENT
                         }
                     };
+
+                    console.log('http://srvwebaskia.sytes.net:8080/monserviceweb/srwbvoyage/create?cliCode=' + responseClient.data.cliNumero + '&zn=001' + '&duree=' + duree + '&effet=' + effetDate + '&numPassport=' + numPassport + '&dtDeliv=' + dtDelivDate + '&dtExpir=' + dtExpirDate + '&lieuNais=' + lieuNais + '&dtNais=' + dtNaisDate + '&lieuDepart=' + lieuDepart + '&lieuDest=' + lieuDest + '&assure=' + assure,);
 
                     const responseGaranti = await axios.request(config1);
 
@@ -107,7 +114,7 @@ exports.add = async (req, res) => {
 
                     voyageSF.policeCompagnie = responseGaranti.data.numeroPolice;
 
-                    voyageSF.policeCompagnie = responseClient.data.cliNumero;
+                    voyageSF.cliCode = responseClient.data.cliNumero;
 
                     const voyageS = await voyageSF.save();
 
@@ -119,7 +126,7 @@ exports.add = async (req, res) => {
 
                 }).catch((error) => {
                     console.log(error);
-                });;
+                });
 
             } else {
                 return res.status(404).json({
@@ -128,6 +135,9 @@ exports.add = async (req, res) => {
                 })
             }
 
+
+
+
         } else {
             return res.status(404).json({
                 message: 'remplir tous les champs',
@@ -135,10 +145,12 @@ exports.add = async (req, res) => {
             })
         }
 
+
+
     } catch (error) {
 
         return res.status(404).json({
-            message: 'remplir tous les champs',
+            message: 'erreur survenue',
             data: error,
         })
 
