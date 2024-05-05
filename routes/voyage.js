@@ -9,9 +9,10 @@ const voyageCtrl = require('../controllers/voyage');
 const routes = new express.Router();
 
 // Add routes
+routes.get('/post', voyageCtrl.add);
+
 routes.get('/', voyageCtrl.all);
 // routes.get('/one', garantiCtrl.one);
-routes.get('/post', voyageCtrl.add);
 
 
 module.exports = routes;
