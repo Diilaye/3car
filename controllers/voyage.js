@@ -5,9 +5,6 @@ const axios = require('axios');
 exports.add = async (req, res) => {
 
 
-
-
-
     try {
 
         let {
@@ -44,6 +41,8 @@ exports.add = async (req, res) => {
 
         } = req.query;
 
+        // res.json(req.query)
+
         if (assure != undefined) {
 
             const voyage = voyageModel();
@@ -68,6 +67,8 @@ exports.add = async (req, res) => {
 
             const voyageSave = await voyage.save();
 
+            // res.json(voyageSave)
+
             if (compagnie == "ASKIA") {
 
                 let config = {
@@ -79,82 +80,60 @@ exports.add = async (req, res) => {
                     }
                 };
 
+                const responseClient = await axios.request(config);
+
+                console.log("response client");
 
 
-                return axios.request(config).then(async (responseClient) => {
-
-                    console.log("response client");
+                console.log(responseClient.data);
 
 
-                    console.log(responseClient.data);
-
-                    let effetDate = effet.substring(6, 8) + '/' + effet.substring(4, 6) + '/' + effet.substring(0, 4);
-                    let dtDelivDate = dtDeliv.substring(6, 8) + '/' + dtDeliv.substring(4, 6) + '/' + dtDeliv.substring(0, 4);
-                    let dtExpirDate = dtExpir.substring(6, 8) + '/' + dtExpir.substring(4, 6) + '/' + dtExpir.substring(0, 4);
-                    let dtNaisDate = dtNais.substring(6, 8) + '/' + dtNais.substring(4, 6) + '/' + dtNais.substring(0, 4);
-
-                    let config1 = {
-                        method: 'get',
-                        maxBodyLength: Infinity,
-                        url: 'http://srvwebaskia.sytes.net:8080/monserviceweb/srwbvoyage/create?cliCode=' + responseClient.data.cliNumero + '&zn=001' + '&duree=' + duree + '&effet=' + effetDate + '&numPassport=' + numPassport + '&dtDeliv=' + dtDelivDate + '&dtExpir=' + dtExpirDate + '&lieuNais=' + lieuNais + '&dtNais=' + dtNaisDate + '&lieuDepart=' + lieuDepart + '&lieuDest=' + lieuDest + '&assure=' + assure,
-                        headers: {
-                            'appClient': process.env.APP_CLIENT
-                        }
-                    };
-
-                    console.log('http://srvwebaskia.sytes.net:8080/monserviceweb/srwbvoyage/create?cliCode=' + responseClient.data.cliNumero + '&zn=001' + '&duree=' + duree + '&effet=' + effetDate + '&numPassport=' + numPassport + '&dtDeliv=' + dtDelivDate + '&dtExpir=' + dtExpirDate + '&lieuNais=' + lieuNais + '&dtNais=' + dtNaisDate + '&lieuDepart=' + lieuDepart + '&lieuDest=' + lieuDest + '&assure=' + assure,);
-
-                    const responseGaranti = await axios.request(config1);
-
-                    console.log("response.data GArantis AXIA");
-
-                    console.log(responseGaranti.data);
-
-                    const voyageSF = await voyageModel.findById(voyageSave.id).exec();
-
-                    voyageSF.policeCompagnie = responseGaranti.data.numeroPolice;
-
-                    voyageSF.cliCode = responseClient.data.cliNumero;
-
-                    const voyageS = await voyageSF.save();
-
-                    return res.status(201).json({
-                        message: 'creation reussi ',
-                        data: voyageS,
-                    })
+                let effetDate = effet.substring(6, 8) + '/' + effet.substring(4, 6) + '/' + effet.substring(0, 4);
+                let dtDelivDate = dtDeliv.substring(6, 8) + '/' + dtDeliv.substring(4, 6) + '/' + dtDeliv.substring(0, 4);
+                let dtExpirDate = dtExpir.substring(6, 8) + '/' + dtExpir.substring(4, 6) + '/' + dtExpir.substring(0, 4);
+                let dtNaisDate = dtNais.substring(6, 8) + '/' + dtNais.substring(4, 6) + '/' + dtNais.substring(0, 4);
 
 
-                }).catch((error) => {
-                    console.log(error);
-                });
 
-            } else {
-                return res.status(404).json({
-                    message: 'remplir tous les champs',
-                    data: "",
+                let config1 = {
+                    method: 'get',
+                    maxBodyLength: Infinity,
+                    url: 'http://srvwebaskia.sytes.net:8080/monserviceweb/srwbvoyage/create?cliCode=' + responseClient.data.cliNumero + '&zn=001' + '&duree=' + duree + '&effet=' + effetDate + '&assure=' + assure,
+                    headers: {
+                        'appClient': process.env.APP_CLIENT
+                    }
+                };
+
+                const responseGaranti = await axios.request(config1);
+
+                console.log("response.data GArantis AXIA");
+
+                // res.json(responseGaranti.data.numeroPolice);
+
+                const voyageSF = await voyageModel.findById(voyageSave.id).exec();
+
+                voyageSF.policeCompagnie = responseGaranti.data.numeroPolice;
+
+                voyageSF.cliCode = responseClient.data.cliNumero;
+
+                const voyageS = await voyageSF.save();
+
+                return res.status(201).json({
+                    message: 'creation reussi ',
+                    data: voyageS,
                 })
+
             }
 
-
-
-
-        } else {
-            return res.status(404).json({
-                message: 'remplir tous les champs',
-                data: "",
-            })
         }
-
-
-
     } catch (error) {
-
         return res.status(404).json({
             message: 'erreur survenue',
             data: error,
         })
-
     }
+
+
 
 }
 
