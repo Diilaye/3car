@@ -82,67 +82,77 @@ exports.add = async (req, res) => {
                     }
                 };
 
-                const responseClient = await axios.request(config);
-
-                console.log("response client");
-
-
-                console.log(responseClient.data);
+                axios.request(config).then(async (responseClient) => {
+                    console.log("response client");
 
 
-                let effetDate = effet.substring(6, 8) + '/' + effet.substring(4, 6) + '/' + effet.substring(0, 4);
-                let dtDelivDate = dtDeliv.substring(6, 8) + '/' + dtDeliv.substring(4, 6) + '/' + dtDeliv.substring(0, 4);
-                let dtExpirDate = dtExpir.substring(6, 8) + '/' + dtExpir.substring(4, 6) + '/' + dtExpir.substring(0, 4);
-                let dtNaisDate = dtNais.substring(6, 8) + '/' + dtNais.substring(4, 6) + '/' + dtNais.substring(0, 4);
+                    console.log(responseClient.data);
+
+
+                    let effetDate = effet.substring(6, 8) + '/' + effet.substring(4, 6) + '/' + effet.substring(0, 4);
+                    let dtDelivDate = dtDeliv.substring(6, 8) + '/' + dtDeliv.substring(4, 6) + '/' + dtDeliv.substring(0, 4);
+                    let dtExpirDate = dtExpir.substring(6, 8) + '/' + dtExpir.substring(4, 6) + '/' + dtExpir.substring(0, 4);
+                    let dtNaisDate = dtNais.substring(6, 8) + '/' + dtNais.substring(4, 6) + '/' + dtNais.substring(0, 4);
 
 
 
-                var options = {
-                    method: 'GET',
-                    url: 'http://srvwebaskia.sytes.net:8080/monserviceweb/srwbvoyage/create',
-                    params: {
-                        cliCode: '6000C000126',
-                        zn: '001',
-                        duree: duree,
-                        effet: effetDate,
-                        numPassport: numPassport,
-                        dtDeliv: dtDelivDate,
-                        dtExpir: dtExpirDate,
-                        lieuNais: lieuNais,
-                        dtNais: dtNaisDate,
-                        lieuDepart: lieuDepart,
-                        lieuDest: lieuDest,
-                        assure: assure
-                    },
-                    headers: {
-                        appClient: process.env.APP_CLIENT,
+                    var options = {
+                        method: 'GET',
+                        url: 'http://srvwebaskia.sytes.net:8080/monserviceweb/srwbvoyage/create',
+                        params: {
+                            cliCode: '6000C000126',
+                            zn: '001',
+                            duree: duree,
+                            effet: effetDate,
+                            numPassport: numPassport,
+                            dtDeliv: dtDelivDate,
+                            dtExpir: dtExpirDate,
+                            lieuNais: lieuNais,
+                            dtNais: dtNaisDate,
+                            lieuDepart: lieuDepart,
+                            lieuDest: lieuDest,
+                            assure: assure
+                        },
+                        headers: {
+                            appClient: process.env.APP_CLIENT,
 
-                    },
-                    transformRequest: [function (data, headers) {
-                        // Content type header is not present here anyway, only Authorization?
-                        delete headers['content-type'];
-                        return data;
-                    }]
-                };
+                        },
 
-                const responseGaranti = await axios.request(options);
+                    };
 
-                console.log("response.data GArantis AXIA");
+                    axios.request(options).then(async (responseGaranti) => {
+                        console.log("response.data GArantis AXIA");
 
-                console.log(responseGaranti.data);
+                        console.log(responseGaranti.data);
 
-                const voyageSF = await voyageModel.findById(voyageSave.id).exec();
+                        const voyageSF = await voyageModel.findById(voyageSave.id).exec();
 
-                voyageSF.policeCompagnie = responseGaranti.data.numeroPolice;
+                        voyageSF.policeCompagnie = responseGaranti.data.numeroPolice;
 
-                voyageSF.cliCode = responseClient.data.cliNumero;
+                        voyageSF.cliCode = responseClient.data.cliNumero;
 
-                const voyageS = await voyageSF.save();
+                        const voyageS = await voyageSF.save();
 
-                return res.status(201).json({
-                    message: 'creation reussi ',
-                    data: voyageS,
-                })
+                        return res.status(201).json({
+                            message: 'creation reussi ',
+                            data: voyageS,
+                        })
+                    }).catch((errorG) => {
+                        return res.status(404).json({
+                            message: 'creation de garanti non effectuer  ',
+                            data: errorG,
+                        })
+                    });
+
+
+                }).catch((error) => {
+                    return res.status(404).json({
+                        message: 'creation de client non effectuer  ',
+                        data: error,
+                    })
+                });
+
+
 
             }
 
