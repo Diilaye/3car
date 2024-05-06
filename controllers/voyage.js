@@ -1,6 +1,6 @@
 const voyageModel = require('../models/voyage');
 
-const axios = require('axios').default;
+const axios = require('axios');
 
 exports.add = async (req, res) => {
 
@@ -114,7 +114,15 @@ exports.add = async (req, res) => {
                         lieuDest: lieuDest,
                         assure: assure
                     },
-                    headers: { appClient: process.env.APP_CLIENT }
+                    headers: {
+                        appClient: process.env.APP_CLIENT,
+
+                    },
+                    transformRequest: [function (data, headers) {
+                        // Content type header is not present here anyway, only Authorization?
+                        delete headers['content-type'];
+                        return data;
+                    }]
                 };
 
                 const responseGaranti = await axios.request(options);
