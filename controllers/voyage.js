@@ -100,7 +100,7 @@ exports.add = async (req, res) => {
                         method: 'GET',
                         url: 'http://srvwebaskia.sytes.net:8080/monserviceweb/srwbvoyage/create',
                         params: {
-                            cliCode: '6000C000126',
+                            cliCode: responseClient.data.cliNumero,
                             zn: '001',
                             duree: duree,
                             effet: effetDate,
