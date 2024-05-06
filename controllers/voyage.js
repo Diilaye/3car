@@ -115,6 +115,8 @@ exports.add = async (req, res) => {
                         },
                         headers: {
                             appClient: process.env.APP_CLIENT,
+                            Accept: {},
+                            contentType: {}
 
                         },
 
