@@ -115,16 +115,12 @@ exports.add = async (req, res) => {
                         },
                         headers: {
                             appClient: process.env.APP_CLIENT,
-
+                            Accept: '',
+                            contentType: ''
 
                         },
 
-                        transformRequest: [function (data, headers) {
-                            // Content type header is not present here anyway, only Authorization?
-                            delete headers['content-type'];
-                            delete headers['accept'];
-                            return data;
-                        }]
+
 
                     };
 
