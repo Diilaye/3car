@@ -1,12 +1,13 @@
 const voyageModel = require('../models/voyage');
 
-const axios = require('axios');
+const axios = require('axios').default;
 
 exports.add = async (req, res) => {
 
 
-    try {
 
+
+    try {
         let {
 
             assure,
@@ -67,9 +68,10 @@ exports.add = async (req, res) => {
 
             const voyageSave = await voyage.save();
 
-            // res.json(voyageSave)
+            // return res.json(voyageSave)
 
             if (compagnie == "ASKIA") {
+
 
                 let config = {
                     method: 'get',
@@ -95,20 +97,31 @@ exports.add = async (req, res) => {
 
 
 
-                let config1 = {
-                    method: 'get',
-                    maxBodyLength: Infinity,
-                    url: 'http://srvwebaskia.sytes.net:8080/monserviceweb/srwbvoyage/create?cliCode=' + responseClient.data.cliNumero + '&zn=001' + '&duree=' + duree + '&effet=' + effetDate + '&assure=' + assure,
-                    headers: {
-                        'appClient': process.env.APP_CLIENT
-                    }
+                var options = {
+                    method: 'GET',
+                    url: 'http://srvwebaskia.sytes.net:8080/monserviceweb/srwbvoyage/create',
+                    params: {
+                        cliCode: '6000C000126',
+                        zn: '001',
+                        duree: duree,
+                        effet: effetDate,
+                        numPassport: numPassport,
+                        dtDeliv: dtDelivDate,
+                        dtExpir: dtExpirDate,
+                        lieuNais: lieuNais,
+                        dtNais: dtNaisDate,
+                        lieuDepart: lieuDepart,
+                        lieuDest: lieuDest,
+                        assure: assure
+                    },
+                    headers: { appClient: process.env.APP_CLIENT }
                 };
 
-                const responseGaranti = await axios.request(config1);
+                const responseGaranti = await axios.request(options);
 
                 console.log("response.data GArantis AXIA");
 
-                // res.json(responseGaranti.data.numeroPolice);
+                console.log(responseGaranti.data);
 
                 const voyageSF = await voyageModel.findById(voyageSave.id).exec();
 
@@ -125,7 +138,13 @@ exports.add = async (req, res) => {
 
             }
 
+        } else {
+            return res.status(404).json({
+                message: 'remplir tous les champs',
+                data: "",
+            })
         }
+
     } catch (error) {
         return res.status(404).json({
             message: 'erreur survenue',
