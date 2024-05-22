@@ -34,7 +34,9 @@ app.use('/v1/api/garantis', garantiRoute);
 app.use('/v1/api/assurances', assuranceRoute);
 app.use('/v1/api/voyages', voyageRoute);
 
-app.get('/', (req, res) => res.send('ici la terre'));
+app.use(express.static(__dirname + '/web/'));
+
+app.get('/', (req, res) => res.sendFile(path.resolve('web/index.html')));
 
 
 db().then(_ => {
