@@ -89,6 +89,11 @@ const VehiculeModel = new Schema({
         default: ""
     },
 
+    testGarantis: {
+        type: String,
+        default: "test"
+    },
+
 
 
 }, {

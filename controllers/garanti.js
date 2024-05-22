@@ -53,7 +53,8 @@ exports.add = async (req, res) => {
                 vol,
                 inc,
                 pt,
-                gb
+                gb,
+                codeCompagnie
 
             } = req.query;
 
@@ -131,6 +132,7 @@ exports.add = async (req, res) => {
             garanti.cause = cause;
             garanti.cause = cause;
             garanti.policeCompagnie = "Police compagnie";
+            garanti.testGarantis = codeCompagnie == '6000' ? "test" : "production";
 
 
             const garantiSave = await garanti.save();
@@ -143,9 +145,9 @@ exports.add = async (req, res) => {
                     let config = {
                         method: 'get',
                         maxBodyLength: Infinity,
-                        url: 'http://srvwebaskia.sytes.net:8080/monserviceweb/srwbclient/createclient?pvCode=6000&nom=' + nom_assure.replaceAll('_', ' ') + '&numtel=' + tel_assure.replaceAll('_', ' ') + '&adresse=' + adresse_assure.replaceAll('_', ' '),
+                        url: 'http://srvwebaskia.sytes.net:8080/monserviceweb/srwbclient/createclient?pvCode=' + codeCompagnie + '&nom=' + nom_assure.replaceAll('_', ' ') + '&numtel=' + tel_assure.replaceAll('_', ' ') + '&adresse=' + adresse_assure.replaceAll('_', ' '),
                         headers: {
-                            'appClient': process.env.APP_CLIENT
+                            'appClient': codeCompagnie == '6000' ? process.env.APP_CLIENT : process.env.APP_CLIENT_PROD
                         }
                     };
 
@@ -206,10 +208,9 @@ exports.add = async (req, res) => {
                             maxBodyLength: Infinity,
                             url: 'http://srvwebaskia.sytes.net:8080/monserviceweb/srwbauto/create?cliCode=' + responseClient.data.cliNumero + '&cat=' + codeCat + '&scatCode=' + codeSCat + '&carrCode=00&nrg=E00002&pfs=' + puissance + '&nbP=' + place + '&chrgUtil=3500&dure=' + durer + '&effet=' + effetDate + '&numImmat=' + immat.replaceAll('_', ' ') + '&mqCode=' + codeMarque + '&modele=&vaf=' + garantiSave.vaf + '&vvn=' + garantiSave.vvn + '&recour=' + garantiSave.recour + '&vol=' + garantiSave.vol + '&inc=' + garantiSave.inc + '&pt=' + garantiSave.pt + '&gb=' + garantiSave.gb,
                             headers: {
-                                'appClient': process.env.APP_CLIENT
+                                'appClient': codeCompagnie == '6000' ? process.env.APP_CLIENT : process.env.APP_CLIENT_PROD
                             }
                         };
-                        console.log('http://srvwebaskia.sytes.net:8080/monserviceweb/srwbauto/create?cliCode=' + responseClient.data.cliNumero + '&cat=' + codeCat + '&scatCode=' + codeSCat + '&carrCode=00&nrg=E00002&pfs=' + puissance + '&nbP=' + place + '&chrgUtil=3500&dure=' + durer + '&effet=' + effetDate + '&numImmat=' + immat + '&mqCode=' + codeMarque + '&modele=&vaf=' + garantiSave.vaf + '&vvn=' + garantiSave.vvn + '&recour=' + garantiSave.recour + '&vol=' + garantiSave.vol + '&inc=' + garantiSave.inc + '&pt=' + garantiSave.pt + '&gb=' + garantiSave.gb);
 
                         const responseGaranti = await axios.request(config1);
 
