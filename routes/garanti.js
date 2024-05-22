@@ -12,6 +12,7 @@ const routes = new express.Router();
 routes.get('/', garantiCtrl.all);
 routes.get('/one', garantiCtrl.one);
 routes.get('/post', garantiCtrl.add);
+routes.get('/getGrantisAskia', garantiCtrl.getGarantisAskia);
 
 
 module.exports = routes;

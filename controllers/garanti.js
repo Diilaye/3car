@@ -142,7 +142,13 @@ exports.add = async (req, res) => {
 
             if (cause == "AFFAIRE_NOUVELLE" || cause == "RENOUVELLEMENT") {
                 if (compagnie == "ASKIA") {
-                    let apC = codeCompagnie == '6000' ? process.env.APP_CLIENT : process.env.APP_CLIENT_PROD;
+                    let apC = '';
+                    if (codeCompagnie == '6000') {
+                        apC = process.env.APP_CLIENT;
+                    } else {
+                        apC = process.env.APP_CLIENT_PROD;
+                    }
+                    console.log(apC);
                     let config = {
                         method: 'get',
                         maxBodyLength: Infinity,
@@ -151,6 +157,8 @@ exports.add = async (req, res) => {
                             'appClient': apC
                         }
                     };
+
+                    console.log(config);
 
                     return axios.request(config).then(async (responseClient) => {
 
@@ -331,6 +339,33 @@ exports.one = async (req, res) => {
     }
 
 }
+
+
+exports.getGarantisAskia = async (req, res) => {
+    let { dD, dF } = req.query;
+    console.log(dD);
+    console.log(dF);
+
+    console.log('http://srvwebaskia.sytes.net:8080/monserviceweb/partenaire/emission?pvCode=6509&dtDebut=' + dD + '&dtFin=' + dF,);
+    let config = {
+        method: 'get',
+        maxBodyLength: Infinity,
+        url: 'http://srvwebaskia.sytes.net:8080/monserviceweb/partenaire/emission?pvCode=6509&dtDebut=' + dD + '&dtFin=' + dF,
+        headers: {
+            'appClient': process.env.APP_CLIENT_PROD
+        }
+    };
+
+    return axios.request(config)
+        .then((response) => {
+            return res.status(200).json(response.data)
+        })
+        .catch((error) => {
+            console.log(error);
+            return res.json("error")
+        });
+}
+
 
 
 
