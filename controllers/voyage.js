@@ -70,7 +70,7 @@ exports.add = async (req, res) => {
             voyage.compagnie = compagnie;
             voyage.policeCompagnie = "responseGaranti.data.numeroPolice";
             voyage.cliCode = "responseClient.data.cliNumero";
-            garanti.testGarantis = codeCompagnie == '6000' ? "test" : "production";
+            voyage.testVoyage = codeCompagnie == '6000' ? "test" : "production";
 
 
             const voyageSave = await voyage.save();
@@ -83,6 +83,14 @@ exports.add = async (req, res) => {
                     apC = process.env.APP_CLIENT;
                 } else {
                     apC = process.env.APP_CLIENT_PROD;
+                }
+
+                let zn = '';
+
+                if (zone == "SCHENGEN") {
+                    zn = '001';
+                } else {
+                    zn = '002'
                 }
                 let config = {
                     method: 'get',
@@ -109,10 +117,10 @@ exports.add = async (req, res) => {
 
                     var options = {
                         method: 'GET',
-                        url: 'http://srvwebaskia.sytes.net:8080/monserviceweb/srwbvoyage/create?cliCode=' + responseClient.data.cliNumero + '&zn=001&duree=' + duree + '&effet=' + effetDate + '&numPassport=' + numPassport + '&dtDeliv=' + dtDelivDate + '&dtExpir=' + dtExpirDate + '&lieuNais=' + lieuNais + '&dtNais=' + dtNaisDate + 'lieuDepart=' + lieuDepart + '&lieuDest=' + lieuDest,
+                        url: 'http://srvwebaskia.sytes.net:8080/monserviceweb/srwbvoyage/create?cliCode=' + responseClient.data.cliNumero + '&zn=' + zn + '&duree=' + duree + '&effet=' + effetDate + '&numPassport=' + numPassport + '&dtDeliv=' + dtDelivDate + '&dtExpir=' + dtExpirDate + '&lieuNais=' + lieuNais + '&dtNais=' + dtNaisDate + 'lieuDepart=' + lieuDepart + '&lieuDest=' + lieuDest,
 
                         headers: {
-                            'appClient': process.env.APP_CLIENT,
+                            'appClient': apC,
                         },
 
 
