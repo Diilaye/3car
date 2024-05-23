@@ -40,7 +40,9 @@ exports.add = async (req, res) => {
 
             police,
 
-            compagnie
+            compagnie,
+
+            codeCompagnie
 
         } = req.query;
 
@@ -65,18 +67,26 @@ exports.add = async (req, res) => {
             voyage.compagnie = compagnie;
             voyage.policeCompagnie = "responseGaranti.data.numeroPolice";
             voyage.cliCode = "responseClient.data.cliNumero";
+            garanti.testGarantis = codeCompagnie == '6000' ? "test" : "production";
+
 
             const voyageSave = await voyage.save();
 
             // return res.json(voyageSave)
 
             if (compagnie == "ASKIA") {
+                let apC = '';
+                if (codeCompagnie == '6000') {
+                    apC = process.env.APP_CLIENT;
+                } else {
+                    apC = process.env.APP_CLIENT_PROD;
+                }
                 let config = {
                     method: 'get',
                     maxBodyLength: Infinity,
-                    url: 'http://srvwebaskia.sytes.net:8080/monserviceweb/srwbclient/createclient?pvCode=6000&nom=' + assure.replaceAll('_', ' ') + '&numtel=' + telephone.replaceAll('_', ' ') + '&adresse=' + adresse.replaceAll('_', ' '),
+                    url: 'http://srvwebaskia.sytes.net:8080/monserviceweb/srwbclient/createclient?pvCode=' + codeCompagnie + '&nom=' + assure.replaceAll('_', ' ') + '&numtel=' + telephone.replaceAll('_', ' ') + '&adresse=' + adresse.replaceAll('_', ' '),
                     headers: {
-                        'appClient': process.env.APP_CLIENT
+                        'appClient': apC
                     }
                 };
 

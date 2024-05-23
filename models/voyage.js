@@ -90,7 +90,10 @@ const VoyageModel = new Schema({
         default: ""
     },
 
-
+    testVoyage: {
+        type: String,
+        default: "test"
+    },
 
 
 }, {
