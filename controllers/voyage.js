@@ -46,6 +46,9 @@ exports.add = async (req, res) => {
 
         } = req.query;
 
+        console.log("req.query voyage");
+        console.log(req.query);
+
         if (assure != undefined) {
 
             const voyage = voyageModel();
@@ -91,10 +94,10 @@ exports.add = async (req, res) => {
                 };
 
                 return axios.request(config).then(async (responseClient) => {
-                    console.log("response client");
+                    console.log("response  voyage client");
 
 
-                    // return res.json(responseClient.data);
+                    console.log(responseClient.data);
 
 
                     let effetDate = effet.substring(6, 8) + '/' + effet.substring(4, 6) + '/' + effet.substring(0, 4);
@@ -117,7 +120,7 @@ exports.add = async (req, res) => {
                     };
 
                     axios.request(options).then(async (responseGaranti) => {
-                        console.log("response.data GArantis AXIA");
+                        console.log("response.data voyage AXIA");
 
                         console.log(responseGaranti.data);
 
