@@ -94,6 +94,15 @@ const VehiculeModel = new Schema({
         default: "test"
     },
 
+    lienCedeao: {
+        type: String,
+        default: ""
+    },
+    lienSenegal: {
+        type: String,
+        default: ""
+    },
+
 
 
 }, {

@@ -133,6 +133,8 @@ exports.add = async (req, res) => {
             garanti.cause = cause;
             garanti.policeCompagnie = "Police compagnie";
             garanti.testGarantis = codeCompagnie == '6000' ? "test" : "production";
+            garanti.lienCedeao = "lien cedeao";
+            garanti.lienSenegal = " lien Senegal";
 
 
             const garantiSave = await garanti.save();
@@ -230,6 +232,8 @@ exports.add = async (req, res) => {
                         const gF = await garantiModel.findById(garantiSave.id).exec();
 
                         gF.policeCompagnie = responseGaranti.data.numeroPolice;
+                        gF.lienCedeao = responseGaranti.data.lien.linkCarteBrune;
+                        gF.lienSenegal = responseGaranti.data.lien.linkAttestation;
 
                         const gfS = await gF.save();
 
