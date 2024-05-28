@@ -103,6 +103,21 @@ const VehiculeModel = new Schema({
         default: ""
     },
 
+    primenette: {
+        type: String,
+        default: ""
+    },
+
+    primettc: {
+        type: String,
+        default: ""
+    },
+
+    taxe: {
+        type: String,
+        default: ""
+    }
+
 
 
 }, {

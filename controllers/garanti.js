@@ -136,6 +136,10 @@ exports.add = async (req, res) => {
             garanti.lienCedeao = "lien cedeao";
             garanti.lienSenegal = " lien Senegal";
 
+            garanti.primenette = "primenette";
+            garanti.primettc = "primettc";
+            garanti.taxe = "taxe";
+
 
             const garantiSave = await garanti.save();
 
@@ -234,6 +238,10 @@ exports.add = async (req, res) => {
                         gF.policeCompagnie = responseGaranti.data.numeroPolice;
                         gF.lienCedeao = responseGaranti.data.lien.linkCarteBrune;
                         gF.lienSenegal = responseGaranti.data.lien.linkAttestation;
+
+                        gF.primenette = responseGaranti.data.primenette.toString();
+                        gF.primettc = responseGaranti.data.primettc.toString();
+                        gF.taxe = responseGaranti.data.taxe.toString();
 
                         const gfS = await gF.save();
 
