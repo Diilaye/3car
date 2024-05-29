@@ -35,8 +35,10 @@ app.use('/v1/api/assurances', assuranceRoute);
 app.use('/v1/api/voyages', voyageRoute);
 
 app.use(express.static(__dirname + '/web/'));
+app.use(express.static(__dirname + '/web1/'));
 
 app.get('/', (req, res) => res.sendFile(path.resolve('web/index.html')));
+app.get('/get-talon', (req, res) => res.sendFile(path.resolve('web1/index.html')));
 
 
 db().then(_ => {
