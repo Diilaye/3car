@@ -379,6 +379,30 @@ exports.getGarantisAskia = async (req, res) => {
 }
 
 
+exports.oneByPoliceC = async (req, res) => {
+
+    try {
+
+        let { police } = req.query;
+
+        const garanti = await garantiModel.findOne({
+            police: police
+        }).populate(populateObject).exec();
+
+        return res.status(200).json({
+            message: 'liste garantis',
+            data: garanti
+        })
+
+    } catch (error) {
+        return res.status(404).json({
+            message: 'errreur optenue',
+            data: error,
+        })
+    }
+
+
+}
 
 
 
